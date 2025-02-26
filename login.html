@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود</title>
+    <style>
+        
+        body {
+            
+            font-family: Arial, sans-serif;
+            background-color: #0e364e;
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            color: #82e0aa;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #52be80;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #82e0aa;
+            
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* رسپانسیو برای موبایل */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            input[type="password"] {
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            .error {
+                font-size: 12px;
+            }
+            .heart, .flower {
+                font-size: 14px;
+            }
+        /* استایل قلب و گل */
+        .animation {
+            position: absolute;
+            z-index: 1;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .heart {
+            color: #e74c3c;
+            font-size: 20px;
+        }
+
+        .flower {
+            color: #ff69b4;
+            font-size: 20px;
+        }
+
+        /* انیمیشن شناور شدن */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>لطفاً رمز سری رو وارد کن عزیز من</h1>
+        <input type="password" id="password" placeholder="رمز سری">
+        <button onclick="checkPassword()">ورود</button>
+        <p id="error" class="error"></p>
+    </div>
+
+    <script>
+        // تابع بررسی رمز عبور
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('error');
+
+            // رمز عبور صحیح (مثلاً "iloveyou")
+            if (password === "iloveyou") {
+                window.location.href = "home.html";  
+            } else {
+                error.innerText = "رمز عبور اشتباه است!";
+            }
+        }
+
+        // تابع ایجاد انیمیشن قلب و گل
+        function createAnimation(type, delay) {
+            setTimeout(() => {
+                const element = document.createElement("div");
+                element.classList.add("animation", type);
+                element.innerHTML = type === "heart" ? "❤️" : "🌸";
+
+                // موقعیت تصادفی برای عنصر (بدون قرار گرفتن زیر باکس)
+                const x = Math.random() * (window.innerWidth - 100); // ۱۰۰ پیکسل فاصله از لبه‌ها
+                const y = Math.random() * (window.innerHeight - 100); // ۱۰۰ پیکسل فاصله از لبه‌ها
+                element.style.left = `${x}px`;
+                element.style.top = `${y}px`;
+
+                document.body.appendChild(element);
+
+                // حذف عنصر بعد از پایان انیمیشن
+                setTimeout(() => {
+                    element.remove();
+                }, 5000);
+            }, delay);
+        }
+
+        // هر ۳ ثانیه سه قلب و چهار گل با کمی اختلاف زمانی ایجاد کن
+        setInterval(() => {
+            createAnimation("heart", 0); // قلب اول
+            createAnimation("heart", 200); // قلب دوم با کمی تاخیر
+            createAnimation("heart", 400); // قلب سوم با کمی تاخیر
+
+            createAnimation("flower", 600); // گل اول
+            createAnimation("flower", 800); // گل دوم
+            createAnimation("flower", 1000); // گل سوم
+            createAnimation("flower", 1200); // گل چهارم
+        }, 3000);
+    </script>
+</body>
+</html>

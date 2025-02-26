@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>how can i apologies to be forgiven</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #775296;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* حالت تاریکی صفحه */
+        .dark-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(184, 23, 23);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 2s ease-in-out;
+        }
+
+        /* متن "سلام عشق من" */
+        .greeting {
+            font-size: 24px;
+            color: white;
+            opacity: 0;
+            animation: fadeIn 3s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* دکمه مرکزی */
+        .center-button {
+            background-color: #5b8a6f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            z-index: 2;
+        }
+
+        .center-button:hover {
+            background-color: #d661af;
+        }
+
+        /* متن "سلام عشق من" بعد از روشن شدن صفحه */
+        .greeting.final-position {
+            position: absolute;
+            top: 20px;
+            font-size: 24px;
+            color: #e74c3c;
+            z-index: 1;
+        }
+
+        /* روزشمارها */
+        .countdown-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .countdown {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .countdown h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .countdown p {
+            margin: 5px 0 0;
+            font-size: 24px;
+            color: #e74c3c;
+        }
+
+        /* انیمیشن قلب تپنده */
+        .heart {
+            position: absolute;
+            top: 20px;
+            font-size: 40px;
+            color: #e74c3c;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* بخش بازی */
+        .game-container {
+            position: absolute;
+            top: 100px;
+            width: 80%;
+            max-width: 600px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .game-start-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #775296;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .game-start-button:hover {
+            background-color: #d661af;
+        }
+
+        .game-character {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            font-size: 40px;
+        }
+
+        .game-heart {
+            position: absolute;
+            font-size: 30px;
+            color: #e74c3c;
+            animation: moveHeart linear infinite;
+        }
+
+        @keyframes moveHeart {
+            to {
+                transform: translate(var(--endX), var(--endY));
+            }
+        }
+
+        .game-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            display: none;
+        }
+
+        .game-message button {
+            background-color: #775296;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .game-message button:hover {
+            background-color: #d661af;
+        }
+    </style>
+</head>
+<body>
+    <!-- حالت تاریکی و متن "سلام عشق من" -->
+    <div id="darkOverlay" class="dark-overlay">
+        <div id="greeting" class="greeting">سلام عشق من</div>
+    </div>
+
+    <!-- قلب تپنده -->
+    <div class="heart">❤️</div>
+
+    <!-- بخش بازی -->
+    <div class="game-container">
+        <button id="startButton" class="game-start-button">شروع بازی</button>
+        <div id="character" class="game-character">👧</div>
+        <div id="messageBox" class="game-message">
+            <p id="messageText"></p>
+            <button onclick="closeMessage()">بستن</button>
+            <style>  /* رسپانسیو برای موبایل */
+                @media (max-width: 600px) {
+                    .game-container {
+                        height: 50vh;
+                    }
+        
+                    .game-character {
+                        font-size: 30px;
+                    }
+        
+                    .game-heart {
+                        font-size: 20px;
+                    }
+        
+                    .game-message {
+                        width: 80%;
+                        font-size: 14px;
+                    }
+        
+                    .game-message button {
+                        font-size: 14px;
+                        padding: 8px 16px;
+                    }
+                }</style>
+        </div>
+    </div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- دکمه مرکزی -->
+    <button class="center-button">از زبان شما: چی می‌خوای بگی؟</button>
+    <script>
+        // دکمه مرکزی
+        const centerButton = document.querySelector('.center-button');
+
+        // اضافه کردن رویداد کلیک به دکمه مرکزی
+        centerButton.addEventListener('click', () => {
+            // باز کردن صفحه جدید
+            window.open('m.html');
+        });
+    </script>
+    <br><br><br>
+   
+    <!-- روزشمارها -->
+    <br><br><br><br><br><br>
+    <div class="countdown-container">
+        <div class="countdown">
+            <h3>تا الان</h3>
+            <p id="countdown3">286</p>
+            <h3>روز با هم بودیم</h3>
+        </div>
+        
+   
+
+    <script>
+        // انیمیشن تاریکی و متن "سلام عشق من"
+        const darkOverlay = document.getElementById('darkOverlay');
+        const greeting = document.getElementById('greeting');
+
+        setTimeout(() => {
+            // تاریکی رو محو کن
+            darkOverlay.style.opacity = '0';
+
+            // متن "سلام عشق من" رو به بالای صفحه منتقل کن
+            setTimeout(() => {
+                greeting.classList.add('final-position');
+                darkOverlay.remove(); // تاریکی رو از صفحه حذف کن
+            }, 2000); // ۲ ثانیه بعد از محو شدن تاریکی
+        }, 10000); // بعد از ۱۰ ثانیه
+
+        // روزشمارها
+        let countdown1 = 487;
+        let countdown2 = 123;
+        let countdown3 = 286;
+
+        const countdownElement1 = document.getElementById('countdown1');
+        const countdownElement2 = document.getElementById('countdown2');
+        const countdownElement3 = document.getElementById('countdown3');
+
+        // تابع به‌روزرسانی روزشمارها
+        function updateCountdowns() {
+            // روزشمار اول و دوم: هر روز یک روز کم می‌شه
+            countdown1--;
+            countdown2--;
+
+            // روزشمار سوم: هر روز یک روز اضافه می‌شه
+            countdown3++;
+
+            // به‌روزرسانی متن
+            countdownElement1.innerText = countdown1;
+            countdownElement2.innerText = countdown2;
+            countdownElement3.innerText = countdown3;
+        }
+
+        // هر ۲۴ ساعت (۸۶۴۰۰۰۰۰ میلی‌ثانیه) روزشمارها به‌روزرسانی بشن
+        setInterval(updateCountdowns, 86400000);
+
+        // بخش بازی
+        const startButton = document.getElementById('startButton');
+        const character = document.getElementById('character');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+
+        let heartsCollected = 0;
+        let totalHearts = 40;
+        let gameInterval;
+        let isGamePaused = false;
+
+        // لیست متن‌های متفاوت
+        const messages = [
+            "خیلی متاسفم ❤️",
+            "خیلی عاشقت میباشم 💕",
+            " و همیشه عاشقت میمونم",
+            "همه چیز من میباشی 🌹",
+            "کل عمرم میباشی 💖",
+            "کل زندگیم میباشی 💞",
+            "باعث میشی زندگی قشنگ باشه ",
+            " خیلی زیبا هستی",
+            "ببخشید 💓",
+            "خورشیک من میباشی",
+            "خیلی لاو یو",
+            "تی اموره",
+            "میومیومیو",
+            "متاسفم...",
+            "گوجوبوجو💟",
+            "دلیل لذت بردن از وجود داشتن منی",
+            "   خیییییییییییییییلی عاشقتممممم💖",
+            "عشقی قیر قابل توصیف برایت میدارم💕",
+            "پیشک خوشگلکم میباشی💓",
+            " خونه گرم و نرم و امن منی💘"
+        ];
+
+        // شروع بازی
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none';
+            startGame();
+        });
+
+        // شروع بازی
+        function startGame() {
+            heartsCollected = 0;
+            createHeart();
+        }
+
+        // ایجاد قلب جدید
+        function createHeart() {
+            if (heartsCollected >= totalHearts) {
+                showMessage(" همه قلب های اینجا رو گرفتی اما در واقعیت عشقی که برات دارم هیچوقت تموم نمیشه ");
+                return;
+            }
+
+            const heart = document.createElement('div');
+            heart.classList.add('game-heart');
+            heart.innerHTML = '❤️';
+
+            // موقعیت شروع قلب (به صورت تصادفی از چهار جهت)
+            const startPositions = [
+                { x: Math.random() * window.innerWidth, y: -50 }, // بالا
+                { x: Math.random() * window.innerWidth, y: window.innerHeight + 50 }, // پایین
+                { x: -50, y: Math.random() * window.innerHeight }, // چپ
+                { x: window.innerWidth + 50, y: Math.random() * window.innerHeight } // راست
+            ];
+            const start = startPositions[Math.floor(Math.random() * startPositions.length)];
+            heart.style.left = `${start.x}px`;
+            heart.style.top = `${start.y}px`;
+
+            // موقعیت پایان قلب (ایموجی دختر)
+            const characterRect = character.getBoundingClientRect();
+            const endX = characterRect.left + characterRect.width / 2 - start.x;
+            const endY = characterRect.top + characterRect.height / 2 - start.y;
+            heart.style.setProperty('--endX', `${endX}px`);
+            heart.style.setProperty('--endY', `${endY}px`);
+
+            // مدت زمان حرکت قلب (بین 2 تا 4 ثانیه)
+            const duration = Math.random() * 2000 + 2000;
+            heart.style.animationDuration = `${duration}ms`;
+
+            // اضافه کردن قلب به صفحه
+            document.body.appendChild(heart);
+
+            // بررسی برخورد قلب با ایموجی دختر
+            const checkCollision = setInterval(() => {
+                const heartRect = heart.getBoundingClientRect();
+                if (
+                    characterRect.left < heartRect.right &&
+                    characterRect.right > heartRect.left &&
+                    characterRect.top < heartRect.bottom &&
+                    characterRect.bottom > heartRect.top
+                ) {
+                    clearInterval(checkCollision);
+                    heart.remove();
+                    heartsCollected++;
+                    showMessage(messages[heartsCollected % messages.length]);
+                }
+            }, 10);
+
+            // ایجاد قلب بعدی با تاخیر 2 تا 4 ثانیه
+            if (heartsCollected < totalHearts) {
+                setTimeout(createHeart, Math.random() * 2000 + 2000);
+            }
+        }
+
+        // نمایش پیام
+        function showMessage(message) {
+            messageText.innerText = message;
+            messageBox.style.display = 'block';
+            isGamePaused = true;
+        }
+
+        // بستن پیام
+        function closeMessage() {
+            messageBox.style.display = 'none';
+            isGamePaused = false;
+            if (heartsCollected < totalHearts) {
+                createHeart();
+            }
+            
+        }
+    </script>
+</body>
+</html>

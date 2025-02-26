@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نامه</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .letter-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            z-index: -1;
+            border-radius: 15px;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .letter-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+        }
+
+        .letter-body {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #333;
+        }
+         /* رسپانسیو برای موبایل */
+         @media (max-width: 600px) {
+            .letter-container {
+                padding: 15px;
+            }
+
+            .letter-header h1 {
+                font-size: 20px;
+            }
+
+            .letter-body {
+                font-size: 14px;
+            }
+
+            .letter-signature {
+                font-size: 18px;
+            }
+    </style>
+    <!-- لینک فونت برای امضا -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="letter-container">
+        <div class="letter-header">
+            <h1>نامه‌ای به پیشک من
+                </h1>
+        </div>
+        <div class="letter-body">
+            <p>                سلام عزیز من. 
+            </p>
+            <p>
+                امیدوارم الان راحت خوابیده باشی و حداقل تو خواب، ناراحت نباشی.
+                میدونم که از دستم ناراحتی و حق هم داری که عصبانی و ناراحت باشی…
+                خیلی متاسفم که، خیلی خیلی زیاد.
+                
+                بدترین حس جهان، مال وقتیه که کاری انجام میدم که باعث ناراحتی شما میشه. هر دفعه همچین اتفاقی میافته قلبم له میشه و میمیرم. به میزان بینهایتی از خودم متنفرم میشم و از دست خودم حرص میخورم و عصبانی میشم و…
+            <br>
+                چه برسه به اینکه این دفعه دلت رو شکوندم.
+
+                برای همین میگفتم شما هم حق داری اگه هر کدوم از این حس‌ها رو بهم پیدا کنی…
+            
+                 فقط خواستم با این نشون بدم که واقعا متاسفم؛ هیچ راه دیگه‌ای براش به ذهنم نرسید.
+                 درک میکنم که گفتی فاصله لازم داری، این رو هم بدون که هیچوقت هیچوقت هیچوقت همچین کار حال بهم زن احمقانه ای یا هر چیزی که ذره ای شبیهش باشه نمیکنم.
+                خیلی ببخشید که وسط این همه کار و درس و فشاری که روت هست، منم فشار اضافه بهت وارد کردم و باعث شدم ناراحت بشی.
+           
+               
+                
+            </p>
+            <p>
+              
+              خیلی عاشقت میباشم و خواهم موند
+              امیدوارم  شانس بخشیده شدن رو بهم بدی
+            </p>
+        </div>
+        <div class="letter-signature">
+            با عشق،
+            <span> مسیح همیشگی شما</span>
+        </div>
+    </div>
+</body>
+</html>
